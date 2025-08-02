@@ -1,0 +1,39 @@
+trend_research:
+  description: >
+    Analyze the latest trends related to {topic} to identify a compelling blog topic.
+    The final output must be a detailed research report containing key insights, statistics, and a clear blog post title recommendation.
+    Use the Trend Hunter Agent's research tool to find key insights and data points.
+  expected_output: >
+    A detailed report on a single trending topic, including why it's popular,
+    key sub-topics, and a clear recommendation for a blog post title.
+  agent: trend_hunter
+
+# ... the rest of the file remains the same ...
+content_generation:
+  description: >
+    Write a comprehensive and well-structured blog post draft based on the provided research report.
+    The tone should be professional and engaging.
+  expected_output: >
+    A complete blog post draft with a title, an introduction, multiple sections, and a conclusion.
+    The content must be unique and insightful.
+  context: [trend_research]
+  agent: content_writer
+
+blog_editing:
+  description: >
+    Review the blog post draft for grammar, clarity, and style.
+    Refine the language to ensure it is engaging and aligns with our brand's voice.
+  expected_output: >
+    A polished and ready-to-publish version of the blog post, free of errors and well-formatted.
+  context: [content_generation]
+  agent: editor
+
+content_summarization:
+  description: >
+    Create a concise summary and a meta description for the final blog post.
+    The summary should be suitable for social media sharing and SEO.
+  expected_output: >
+    A summary of the blog post (1-2 sentences) and a meta description (around 160 characters)
+    in a clear, structured format.
+  context: [blog_editing]
+  agent: summarizer
