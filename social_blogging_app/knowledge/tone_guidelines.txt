@@ -1,0 +1,7 @@
+Title: Blog Tone Guidelines for AI-Focused Content
+
+- Maintain a **professional yet accessible** tone.
+- Avoid excessive jargon; explain technical terms when used.
+- Use analogies or real-world examples to simplify complex ideas.
+- Stay up to date with AI news and cite reputable sources.
+- End every post with a thought-provoking question or next step for the reader.

@@ -1,0 +1,34 @@
+from fastapi import APIRouter, HTTPException, Query
+from social_blogging_app.utils.embedding_store import query_similar_documents
+
+router = APIRouter()
+
+PRESET_PROMPTS = {
+    "trend_hooks": "What are some popular hook styles I could use to open a blog post about AI in education?",
+    "twitter_guidelines": "Use Twitter platform guidelines to draft a thread about personal branding for AI bloggers in 2025.",
+    "editor_ai_seo": "Improve the following draft to better align with current AI+SEO trends and blogging tone best practices.",
+    "meta_contrarian": "Create a compelling meta description using the provided content that uses a contrarian hook format."
+}
+
+@router.get("/test-rag")
+async def test_rag(
+    prompt_key: str = Query(..., description="One of: trend_hooks, twitter_guidelines, editor_ai_seo, meta_contrarian"),
+    top_k: int = Query(2, description="Number of similar documents to retrieve")
+):
+    """
+    Tests vector similarity retrieval for RAG using a predefined prompt.
+    """
+    try:
+        query = PRESET_PROMPTS.get(prompt_key)
+        if not query:
+            raise ValueError("Invalid prompt_key. Choose one of: " + ", ".join(PRESET_PROMPTS.keys()))
+        
+        results = query_similar_documents(query, k=top_k)
+        return {
+            "query": query,
+            "top_k": top_k,
+            "retrieved_chunks": results
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"RAG test failed: {str(e)}")

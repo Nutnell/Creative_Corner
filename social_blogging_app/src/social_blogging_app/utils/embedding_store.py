@@ -1,0 +1,48 @@
+import os
+import chromadb
+from langchain_community.document_loaders import TextLoader
+from langchain_community.vectorstores import Chroma
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.docstore.document import Document
+from dotenv import load_dotenv
+
+load_dotenv()
+
+CHROMA_DIR = "vector_db"
+
+
+def get_embedding_model():
+    return GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
+
+def load_documents_from_folder(folder_path: str):
+    documents = []
+    for file in os.listdir(folder_path):
+        if file.endswith(".txt") or file.endswith(".md"):
+            try:
+                loader = TextLoader(os.path.join(folder_path, file))
+                documents.extend(loader.load())
+            except Exception as e:
+                print(f"❌ Failed to load {file}: {e}")
+    return documents
+
+
+def ingest_documents(folder_path: str = "knowledge"):
+    documents = load_documents_from_folder(folder_path)
+    if not documents:
+        raise ValueError("No documents found for ingestion.")
+
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    docs = text_splitter.split_documents(documents)
+
+    db = Chroma.from_documents(
+        documents=docs, embedding=get_embedding_model(), persist_directory=CHROMA_DIR
+    )
+    db.persist()
+    return "✅ Documents ingested and stored in ChromaDB"
+
+
+def query_similar_documents(query: str, k: int = 3):
+    db = Chroma(persist_directory=CHROMA_DIR, embedding_function=get_embedding_model())
+    return db.similarity_search(query, k=k)

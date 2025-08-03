@@ -1,0 +1,11 @@
+# Writing for Social Media: Tips & Tricks
+
+Social media audiences crave authenticity and brevity. Here’s how to craft posts that perform:
+
+- Start with a **hook**: Ask a question or make a bold statement.
+- Keep it **short**: Aim for 1-2 short paragraphs.
+- Add **emojis** and **hashtags** when relevant.
+- Use **visuals** to enhance engagement.
+- Always **respond to comments** and foster conversation.
+
+Remember: Every platform is different — what works on LinkedIn may flop on TikTok.

@@ -1,0 +1,24 @@
+FROM python:3.10-slim
+
+# Set working directory in the container
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+
+# Copy everything in social_blogging_app into /app
+COPY . .
+
+# Install dependencies
+RUN pip install --no-cache-dir --upgrade pip \
+ && (pip install --no-cache-dir -r requirements.txt || true) \
+ && (pip install --no-cache-dir -e . || true)
+ 
+# Expose FastAPI port
+EXPOSE 8000
+
+# Set PYTHONPATH so imports work
+ENV PYTHONPATH=/app
+
+# Start FastAPI app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

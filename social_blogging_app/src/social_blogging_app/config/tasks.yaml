@@ -8,7 +8,6 @@ trend_research:
     key sub-topics, and a clear recommendation for a blog post title.
   agent: trend_hunter
 
-# ... the rest of the file remains the same ...
 content_generation:
   description: >
     Write a comprehensive and well-structured blog post draft based on the provided research report.

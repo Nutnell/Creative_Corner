@@ -1,0 +1,16 @@
+# Examples of Good Blog Post Hooks
+
+## Example 1: The Story Hook
+"Three years ago, I was broke and sleeping on my friend’s couch. Today, I run a six-figure agency from my laptop."
+
+## Example 2: The Contrarian Hook
+"Everything you've been told about productivity is wrong. Working less might actually get you more done."
+
+## Example 3: The Curiosity Hook
+"Most people use ChatGPT wrong. Here’s what top AI experts do instead."
+
+## Example 4: The Problem-Solution Hook
+"Tired of writing blog posts no one reads? Learn the 3-step formula top creators use to craft irresistible content."
+
+## Example 5: The Data-Driven Hook
+"89% of blog posts never get any traffic from Google. Here’s how to make sure yours is in the 11% that do."

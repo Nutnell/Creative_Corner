@@ -1,0 +1,10 @@
+Title: SEO Best Practices for Blog Content
+
+1. Use a clear and engaging title with the primary keyword.
+2. Structure content with H1, H2, and H3 headings.
+3. Maintain keyword density around 1-2%.
+4. Include internal links to related articles.
+5. Optimize images with alt text.
+6. Write a strong meta description under 160 characters.
+7. Focus on readability — use short sentences and active voice.
+8. End with a clear CTA (Call To Action).

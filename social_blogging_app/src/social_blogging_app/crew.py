@@ -4,8 +4,17 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from typing import List
 from crewai.agents.agent_builder.base_agent import BaseAgent
+import sys
+import os
 
-# Import custom tools
+# Add path for local imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+# ✅ Use updated model name factory
+from utils.llm_factory import get_llm_model_name
+llm_model_name = get_llm_model_name()
+
+# ✅ Import custom tools (these use LangChain internally — no change needed)
 from .tools.custom_tool import (
     get_current_trends,
     generate_draft,
@@ -25,6 +34,7 @@ class SocialBloggingAi():
         return Agent(
             config=self.agents_config['trend_hunter'], 
             tools=[get_current_trends],
+            llm=llm_model_name,
             verbose=True
         )
     
@@ -33,6 +43,7 @@ class SocialBloggingAi():
         return Agent(
             config=self.agents_config['content_writer'],
             tools=[generate_draft],
+            llm=llm_model_name,
             verbose=True
         )
 
@@ -41,6 +52,7 @@ class SocialBloggingAi():
         return Agent(
             config=self.agents_config['editor'],
             tools=[edit_draft],
+            llm=llm_model_name,
             verbose=True
         )
 
@@ -49,6 +61,7 @@ class SocialBloggingAi():
         return Agent(
             config=self.agents_config['summarizer'],
             tools=[summarize_post],
+            llm=llm_model_name,
             verbose=True
         )
 

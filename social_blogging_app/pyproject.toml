@@ -1,23 +1,20 @@
 [project]
-name = "social_blogging_app"
+name = "social_blogging_ai"
 version = "0.1.0"
-description = "social_blogging_app using crewAI"
-authors = [{ name = "Nutnell", email = "nutnell00@gmail.com" }]
-requires-python = ">=3.10,<3.14"
+description = "An AI agent crew for social media blogging."
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
 dependencies = [
-    "crewai[tools]>=0.152.0,<1.0.0"
+    "crewai>=0.40.0",
+    "crewai-tools>=0.2.0",
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.1",
+    "pydantic>=2.8.0",
+    "langchain-groq>=0.1.4",
+    "langchain-google-genai>=0.1.2",
+    "pysbd>=0.3.3",
 ]
 
-[project.scripts]
-social_blogging_app = "social_blogging_app.main:run"
-run_crew = "social_blogging_app.main:run"
-train = "social_blogging_app.main:train"
-replay = "social_blogging_app.main:replay"
-test = "social_blogging_app.main:test"
-
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.crewai]
-type = "crew"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
