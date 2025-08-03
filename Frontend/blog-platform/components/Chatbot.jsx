@@ -92,4 +92,77 @@ export function Chatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className
+        <Card className="fixed bottom-6 right-6 w-96 max-w-full z-50 shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between p-4 border-b">
+            <CardTitle>AI Chatbot</CardTitle>
+            <Button size="icon" variant="ghost" onClick={toggleChat}>
+              <X className="h-5 w-5" />
+            </Button>
+          </CardHeader>
+          <CardContent className="p-4">
+            <div
+              ref={chatContainerRef}
+              className="max-h-80 overflow-y-auto space-y-2 mb-4"
+            >
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={cn(
+                    "flex flex-col",
+                    msg.isUser ? "items-end" : "items-start"
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "rounded-lg px-3 py-2 text-sm",
+                      msg.isUser
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-100 text-gray-900"
+                    )}
+                  >
+                    {msg.text}
+                  </div>
+                  <span className="text-xs text-gray-400 mt-1">
+                    {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex items-start">
+                  <div className="rounded-lg px-3 py-2 text-sm bg-gray-100 text-gray-900 animate-pulse">
+                    Typing...
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div className="text-xs text-red-500 mt-2">{error}</div>
+              )}
+            </div>
+            <form
+              className="flex gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMessage();
+              }}
+            >
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                disabled={isLoading}
+                autoFocus
+              />
+              <Button
+                type="submit"
+                disabled={isLoading || !input.trim()}
+                size="icon"
+              >
+                <Send className="h-5 w-5" />
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      )}
+    </>
+  );
+}
