@@ -24,10 +24,8 @@ app = FastAPI(
 )
 
 # Configure CORS policies to allow communication with the frontend
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
+origins = ["*"]
+
 
 app.add_middleware(
     CORSMiddleware,
