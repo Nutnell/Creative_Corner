@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.abspath(os.path.join(current_dir, '..', '..'))
+parent_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
 sys.path.insert(0, parent_dir)
 from utils.llm_factory import get_llm
 
@@ -20,12 +20,10 @@ app = FastAPI(
     description="API for an AI agent crew that generates social media blog posts.",
     version="0.1.0",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
 )
 
-origins = [
-    "https://creative-corner.onrender.com"
-]
+origins = ["https://creative-corner-three.vercel.app"]
 
 
 app.add_middleware(
@@ -40,6 +38,7 @@ app.add_middleware(
 app.include_router(blog_routes.router, prefix="/api")
 app.include_router(test_rag.router, prefix="/api")
 app.include_router(chat_routes.router, prefix="/api")
+
 
 @app.get("/")
 def read_root():
