@@ -14,7 +14,6 @@ export async function POST(req) {
       ? "https://creative-corner.onrender.com/api/generate-blog"
       : "https://creative-corner.onrender.com/api/chat";
 
-    // Blog expects { topic: ..., tone: ... }
     const payload = isBlog
       ? { topic: message, tone: "professional" }
       : { prompt: message };

@@ -43,7 +43,7 @@ async def generate_blog(request: BlogRequest):
             ),
             process=Process.sequential,
             verbose=True,
-            llm=llm_instance # <-- THIS IS THE CRUCIAL LINE
+            llm=llm_instance
         )
 
         # Kickoff the crew and get the result
@@ -54,7 +54,7 @@ async def generate_blog(request: BlogRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred while running the crew: {e}")
 
-# Add a simple root endpoint to confirm the server is running
+# root endpoint to confirm the server is running
 @app.get("/")
 def read_root():
     return {"message": "Social Blogging AI Agent API is running."}

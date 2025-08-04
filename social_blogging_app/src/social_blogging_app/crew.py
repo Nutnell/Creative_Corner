@@ -7,14 +7,12 @@ from crewai.agents.agent_builder.base_agent import BaseAgent
 import sys
 import os
 
-# Add path for local imports
+# path for local imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-# ✅ Use updated model name factory
 from utils.llm_factory import get_llm_model_name
 llm_model_name = get_llm_model_name()
 
-# ✅ Import custom tools (these use LangChain internally — no change needed)
 from .tools.custom_tool import (
     get_current_trends,
     generate_draft,

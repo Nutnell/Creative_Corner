@@ -1,4 +1,3 @@
-# src/utils/llm_factory.py
 
 import os
 from dotenv import load_dotenv
@@ -9,13 +8,12 @@ def get_llm_model_name() -> str:
     """
     Returns the model name string for LiteLLM-compatible providers like CrewAI.
     """
-    # Just validate the key exists
+    # validate the key exists
     if not os.getenv("GOOGLE_API_KEY"):
         raise ValueError("GOOGLE_API_KEY not found in environment variables.")
     
-    return "gemini/gemini-1.5-flash"  # LiteLLM-compatible Gemini model name
+    return "gemini/gemini-1.5-flash"  # LiteLLM-compatible Gemini model.
 
-# social_blogging_app/app/utils/llm_factory.py
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 

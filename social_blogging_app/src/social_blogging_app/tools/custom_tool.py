@@ -27,7 +27,7 @@ def get_langchain_llm(temp: float = 0.2) -> ChatGoogleGenerativeAI:
     )
 
 
-# --- Tool definitions ---
+# Tool definitions
 from crewai_tools import SerperDevTool
 
 search_tool = SerperDevTool()
@@ -59,7 +59,7 @@ def get_current_trends(topic: str) -> str:
 @tool("Generate Draft")
 def generate_draft(topic: str, trends: str) -> str:
     """
-    Generates a blog post draft about a given '{topic}', using trend analysis and RAG-enhanced background knowledge.
+    Generates a blog post draft about a given a topic, using trend analysis and RAG-enhanced background knowledge.
     Incorporates key insights from the latest trends and relevant retrieved context from the vector database.
     """
     try:
@@ -137,15 +137,13 @@ def summarize_post(post: dict) -> str:
         return f"An error occurred while summarizing the post: {e}"
 
 
-# --- Agent definition using CrewAI ---
+# Agent definition using CrewAI
 trend_hunter_agent = Agent(
     role="Trend Hunter",
     goal="Discover and analyze the latest trends",
     backstory="An AI expert in real-time trend spotting and blogging",
     verbose=True,
     allow_delegation=False,
-    llm="gemini/gemini-1.5-flash",  # ✅ LiteLLM-compatible model name
+    llm="gemini/gemini-1.5-flash",
     tools=[get_current_trends, generate_draft, edit_draft, summarize_post],
 )
-
-# You can now use `trend_hunter_agent` in your Crew setup.

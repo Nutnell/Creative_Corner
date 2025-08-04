@@ -133,8 +133,7 @@ export function Chatbot() {
               className="flex-1 overflow-y-auto px-4 py-2 space-y-3 bg-muted/50"
             >
               {messages.map((msg) => {
-                // Regex patterns to find the LAST occurrence of each section, which is likely the final output.
-                // The (?=...) is a positive lookahead to ensure we capture up to the next heading without consuming it.
+              
                 const metaMatch = msg.text.match(/Meta Description:\s*([\s\S]*?)(?=\s*Summary:|\s*Hashtags:|$)/i);
                 const contentMatch = msg.text.match(/Summary:\s*([\s\S]*?)(?=\s*Meta Description:|\s*Hashtags:|$)/is);
                 const hashtagsMatch = msg.text.match(/#\w+/g);

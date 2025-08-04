@@ -23,8 +23,9 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# Configure CORS policies to allow communication with the frontend
-origins = ["*"]
+origins = [
+    "https://creative-corner.onrender.com"
+]
 
 
 app.add_middleware(
@@ -35,7 +36,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include the blog post generation routes
+# generation routes
 app.include_router(blog_routes.router, prefix="/api")
 app.include_router(test_rag.router, prefix="/api")
 app.include_router(chat_routes.router, prefix="/api")
