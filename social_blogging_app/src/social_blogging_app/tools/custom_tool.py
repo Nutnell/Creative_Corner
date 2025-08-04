@@ -80,7 +80,7 @@ def generate_draft(topic: str, trends: str) -> str:
         Relevant Background Info:
         {rag_context}
 
-        Output must be at least 800 words and structured with clear headings.
+        Output should be around 100 words and structured with clear headings.
         """
 
         # Generate the response
