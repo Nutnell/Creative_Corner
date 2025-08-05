@@ -23,7 +23,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-origins = ["https://creative-corner-three.vercel.app"]
+origins = ["*"]
 
 
 app.add_middleware(
