@@ -76,7 +76,8 @@ class SocialBloggingAi():
         return Task(
             config=self.tasks_config['content_generation'],
             agent=self.content_writer(),
-            context=[self.trend_research()]
+            context=[self.trend_research()],
+            output_file='draft_blog_post.txt'
         )
 
     @task
@@ -84,7 +85,8 @@ class SocialBloggingAi():
         return Task(
             config=self.tasks_config['blog_editing'],
             agent=self.editor(),
-            context=[self.content_generation()]
+            context=[self.content_generation()],
+            output_file='edited_blog_post.txt'
         )
 
     @task

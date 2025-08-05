@@ -41,6 +41,8 @@ async def generate_blog_post(request: GenerateBlogRequest):
         with open(log_file, "w", encoding="utf-8") as f:
             f.write(str(result))
 
+        print(f"[Blog Log] Prompt tokens: {len(result.split())}")
+
         return {
             "message": "Blog post successfully generated.",
             "topic": request.topic,
