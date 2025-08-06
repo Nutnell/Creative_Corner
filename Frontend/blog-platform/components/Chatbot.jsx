@@ -58,11 +58,21 @@ export function Chatbot() {
 
       let replyText = "";
       if (typeof data.reply === "object" && data.reply.tasks_output) {
-        // Find the last task, which should contain the final summary and meta description
         const lastTask = data.reply.tasks_output[data.reply.tasks_output.length - 1];
         if (lastTask && lastTask.raw) {
-          // Use the raw text from the final task
-          replyText = lastTask.raw;
+          const titleMatch = lastTask.raw.match(/Title:\s*([\s\S]*?)(?=Meta Description:|Summary:|Hashtags:|$)/i);
+          const metaMatch = lastTask.raw.match(/Meta Description:\s*([\s\S]*?)(?=Title:|Summary:|Hashtags:|$)/i);
+          const contentMatch = lastTask.raw.match(/Summary:\s*([\s\S]*?)(?=Title:|Meta Description:|Hashtags:|$)/is);
+          const hashtagsMatch = lastTask.raw.match(/#\w+/g);
+
+          const parsedReply = {
+            title: titleMatch ? titleMatch[1].trim() : null,
+            meta: metaMatch ? metaMatch[1].trim() : null,
+            summary: contentMatch ? contentMatch[1].trim() : null,
+            hashtags: hashtagsMatch || [],
+            raw: lastTask.raw,
+          };
+          replyText = JSON.stringify(parsedReply);
         } else {
           replyText = "AI response received, but content could not be formatted.";
         }
@@ -133,10 +143,14 @@ export function Chatbot() {
               className="flex-1 overflow-y-auto px-4 py-2 space-y-3 bg-muted/50"
             >
               {messages.map((msg) => {
-              
-                const metaMatch = msg.text.match(/Meta Description:\s*([\s\S]*?)(?=\s*Summary:|\s*Hashtags:|$)/i);
-                const contentMatch = msg.text.match(/Summary:\s*([\s\S]*?)(?=\s*Meta Description:|\s*Hashtags:|$)/is);
-                const hashtagsMatch = msg.text.match(/#\w+/g);
+                let parsedReply = {};
+                let isParsed = false;
+                try {
+                  parsedReply = JSON.parse(msg.text);
+                  isParsed = true;
+                } catch (e) {
+                  // Not a JSON object, so it's simple text.
+                }
 
                 return (
                   <div key={msg.id} className={cn("flex", msg.isUser ? "justify-end" : "justify-start")}>
@@ -147,32 +161,43 @@ export function Chatbot() {
                       {msg.isUser ? (
                         msg.text
                       ) : (
-                        mode === "blog" ? (
+                        mode === "blog" && isParsed ? (
                           <div className="space-y-2">
-                            <div className="font-bold text-blue-800">🧠 Blog Assistant</div>
+                            <h3 className="font-bold text-blue-800">🧠 Blog Assistant</h3>
                             
-                            {/* Display Meta Description */}
-                            {metaMatch && (
+                            {/* Content Heading with H1 and bold */}
+                            <h1 className="text-2xl font-bold text-gray-900">Content</h1>
+
+                            {/* Display Title with H2 and bold */}
+                            {parsedReply.title && (
                                 <div>
-                                    <div className="font-semibold">Meta Description:</div>
-                                    <div className="italic text-gray-700">{metaMatch[1].trim()}</div>
+                                    <h2 className="text-lg font-bold">Title:</h2>
+                                    <p className="text-gray-800">{parsedReply.title}</p>
                                 </div>
                             )}
 
-                            {/* Display Summary */}
-                            {contentMatch && (
+                            {/* Display Meta Description with H3 and bold */}
+                            {parsedReply.meta && (
                                 <div>
-                                    <div className="font-semibold">Summary:</div>
-                                    <div className="text-gray-800">{contentMatch[1].trim()}</div>
+                                    <h3 className="font-bold text-base">Meta Description:</h3>
+                                    <p className="italic text-gray-700">{parsedReply.meta}</p>
+                                </div>
+                            )}
+                            
+                            {/* Display Summary with H3 and bold */}
+                            {parsedReply.summary && (
+                                <div>
+                                    <h3 className="font-bold text-base">Summary:</h3>
+                                    <p className="text-gray-800">{parsedReply.summary}</p>
                                 </div>
                             )}
 
-                            {/* Display Hashtags */}
-                            {hashtagsMatch && (
+                            {/* Display Hashtags with H3 and bold */}
+                            {parsedReply.hashtags.length > 0 && (
                                 <div>
-                                    <div className="font-semibold">Hashtags:</div>
+                                    <h3 className="font-bold text-base">Hashtags:</h3>
                                     <div className="flex flex-wrap gap-2">
-                                        {hashtagsMatch.map((tag, idx) => (
+                                        {parsedReply.hashtags.map((tag, idx) => (
                                             <span key={idx} className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-medium">
                                                 {tag}
                                             </span>
@@ -182,7 +207,7 @@ export function Chatbot() {
                             )}
                           </div>
                         ) : (
-                          // Fallback to simple text display for chat mode
+                          // Fallback to simple text display for chat mode or if parsing fails
                           msg.text
                         )
                       )}
