@@ -23,7 +23,9 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-origins = ["*"]
+origins = [
+    "https://creative-corner.onrender.com"
+]
 
 
 app.add_middleware(

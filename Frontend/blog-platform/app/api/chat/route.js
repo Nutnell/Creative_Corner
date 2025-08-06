@@ -11,8 +11,8 @@ export async function POST(req) {
     const isBlog = mode === "blog";
 
     const endpoint = isBlog
-      ? "http://127.0.0.1:8000/api/generate-blog"
-      : "http://127.0.0.1:8000/api/chat";
+      ? "https://creative-corner.onrender.com/api/generate-blog"
+      : "https://creative-corner.onrender.com/api/chat";
 
     const payload = isBlog
       ? { topic: message, tone: "professional" }
